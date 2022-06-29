@@ -119,7 +119,7 @@ class _TelemetriaScreenState extends State<TelemetriaScreen> {
                                 color: Color(
                                   getColor(maquina.corFonte),
                                 ),
-                                // fontSize: 15,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -134,7 +134,7 @@ class _TelemetriaScreenState extends State<TelemetriaScreen> {
                         color: Color(
                           getColor(situacoes[i].maquinas[0].corFonte),
                         ),
-                        // fontSize: 20,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),
                     );
