@@ -1179,7 +1179,7 @@ class CustomTextFormField extends StatelessWidget {
         labelStyle:
             const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        hintText: 'Em segundos',
+        // hintText: 'Em segundos',
         filled: true,
         fillColor: Colors.white,
       ),
