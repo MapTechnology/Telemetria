@@ -100,7 +100,10 @@ class _TelemetriaScreenState extends State<TelemetriaScreen> {
                 child: Text(
                   arrayCategorias[arrayCat].descricao,
                   style: const TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               );
 
