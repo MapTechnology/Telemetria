@@ -4,6 +4,7 @@ String serverURL = '';
 Exception mensagemErro = Exception();
 int tempoDeEspera = 30;
 int atualizacaoTempo = 15;
+double tamanhoFonte = 18;
 
 void getServer() async {
   final prefs = await SharedPreferences.getInstance();
@@ -29,5 +30,15 @@ void tempoDePaginacao() async {
     atualizacaoTempo = 15;
   } else {
     atualizacaoTempo = int.parse(prefs.getString('tempoAtualizacao')!);
+  }
+}
+
+void tamanhoDaFonte() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  if (prefs.getString('tamanhoFonte') == null) {
+    tamanhoFonte = 18;
+  } else {
+    tamanhoFonte = double.parse(prefs.getString('tamanhoFonte')!);
   }
 }

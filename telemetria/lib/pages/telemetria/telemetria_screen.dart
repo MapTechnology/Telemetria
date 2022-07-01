@@ -102,6 +102,7 @@ class _TelemetriaScreenState extends State<TelemetriaScreen> {
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -122,7 +123,7 @@ class _TelemetriaScreenState extends State<TelemetriaScreen> {
                                 color: Color(
                                   getColor(maquina.corFonte),
                                 ),
-                                fontSize: 17,
+                                fontSize: tamanhoFonte,
                                 fontWeight: FontWeight.bold,
                               ),
                               overflow: TextOverflow.ellipsis,
@@ -137,7 +138,7 @@ class _TelemetriaScreenState extends State<TelemetriaScreen> {
                         color: Color(
                           getColor(situacoes[i].maquinas[0].corFonte),
                         ),
-                        fontSize: 17,
+                        fontSize: tamanhoFonte,
                         fontWeight: FontWeight.bold,
                       ),
                     );
@@ -311,7 +312,7 @@ class _TelemetriaScreenState extends State<TelemetriaScreen> {
                         context: context,
                         builder: (context) => const AlertDialog(
                           title: Text(
-                            'Tempo da Paginação',
+                            'Tempo de Atualização',
                             textAlign: TextAlign.center,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
@@ -324,6 +325,29 @@ class _TelemetriaScreenState extends State<TelemetriaScreen> {
                     )
                   },
                   child: const Text('Tempo de Atualização'),
+                ),
+                PopupMenuItem(
+                  value: 2,
+                  onTap: () => {
+                    Future.delayed(
+                      const Duration(seconds: 0),
+                      () => showDialog(
+                        context: context,
+                        builder: (context) => const AlertDialog(
+                          title: Text(
+                            'Tamanho da Fonte',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          content: TamanhoFonte(),
+                        ),
+                      ).then((value) {
+                        print('hi there');
+                        timersFunction();
+                      }),
+                    )
+                  },
+                  child: const Text('Tamanho da Fonte'),
                 ),
               ],
             ),
@@ -647,6 +671,75 @@ class TempoAtualizacao extends StatelessWidget {
                     if (formKey.currentState!.validate()) {
                       prefs.setString('tempoAtualizacao', tempoController.text);
                       tempoDePaginacao();
+                      Navigator.pop(context);
+                      RestartWidget.restartApp(context);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20.0, horizontal: 25.0),
+                    elevation: 5,
+                  ),
+                  child: const Text(
+                    'Finalizar',
+                    style:
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TamanhoFonte extends StatelessWidget {
+  const TamanhoFonte({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    final TextEditingController fonteController = TextEditingController();
+
+    prefs.getString('tamanhoFonte') != null
+        ? fonteController.text = prefs.getString('tamanhoFonte')!
+        : fonteController.text = "";
+
+    return SingleChildScrollView(
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.3,
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextFormField(
+                onTap: () {
+                  _timerAtualizacao.cancel();
+                  _timerRelogio.cancel();
+                  print('hello');
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Tamanho da Fonte',
+                ),
+                controller: fonteController,
+                keyboardType: TextInputType.number,
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Fonte size deve ser inserido';
+                  }
+                  return null;
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      prefs.setString('tamanhoFonte', fonteController.text);
+                      tamanhoDaFonte();
                       Navigator.pop(context);
                       RestartWidget.restartApp(context);
                     }

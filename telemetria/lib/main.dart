@@ -13,6 +13,7 @@ void main() async {
   // prefs.remove('server');
   getServer();
   tempoDePaginacao();
+  tamanhoDaFonte();
 
   runApp(
     const RestartWidget(
